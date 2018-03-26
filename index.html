@@ -24,33 +24,33 @@
     </div>
     <div id="container">
         <div class="row">
-            <input type="number" class="calcul" id="display"/>
-            <div class="calcul xs"> <p>x<sup>2</sup></p> </div>
-            <div class="calcul xs"> &#8730; </div>
-            <div class="calcul xs"> / </div>
+            <input type="number" class="calcul" id="display" v-bind:value="number"/>
+            <div class="calcul xs operator" id="square" v-on:click="square"> <p>x<sup>2</sup></p> </div>
+            <div class="calcul xs operator" id="root" v-on:click="root"> &#8730; </div>
+            <div class="calcul xs operator" id="division" v-on:click="division"> / </div>
         </div>
         <div class="row" id="highrow">
-            <div class="calcul"> 7 </div>
-            <div class="calcul"> 8 </div>
-            <div class="calcul"> 9 </div>
-            <div class="calcul"> * </div>
+            <div class="calcul valid"> 7 </div>
+            <div class="calcul valid"> 8 </div>
+            <div class="calcul valid"> 9 </div>
+            <div class="calcul operator" id="multiplication" v-on:click="multiplication"> * </div>
         </div>
         <div class="row" id="middlerow">
-            <div class="calcul"> 4 </div>
-            <div class="calcul"> 5 </div>
-            <div class="calcul"> 6 </div>
-            <div class="calcul"> - </div>
+            <div class="calcul valid"> 4 </div>
+            <div class="calcul valid"> 5 </div>
+            <div class="calcul valid"> 6 </div>
+            <div class="calcul operator" id="substraction" v-on:click="substraction"> - </div>
         </div>
         <div class="row" id="lowrow">
-            <div class="calcul"> 1 </div>
-            <div class="calcul"> 2 </div>
-            <div class="calcul"> 3 </div>
-            <div class="calcul"> + </div>
+            <div class="calcul valid"> 1 </div>
+            <div class="calcul valid"> 2 </div>
+            <div class="calcul valid"> 3 </div>
+            <div class="calcul operator" id="addition" v-on:click="addition"> + </div>
         </div>
         <div class="row" id="extrarow">
-            <div class="calcul">  </div>
-            <div class="calcul" id="cero"> 0 </div>
-            <div class="calcul" id="equal"> = </div>
+            <div class="calcul" id="clear"> C </div>
+            <div class="calcul valid" id="cero"> 0 </div>
+            <div class="calcul" id="equal" v-on:click="result"> = </div>
         </div>
     </div>
 </body>

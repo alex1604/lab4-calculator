@@ -1,10 +1,14 @@
-var callback = function () {
-    let calculKeys = document.getElementsByClassName('calcul');
+var callback = function(){
+    let equal = document.getElementById('equal');
+    //let calculKeys = document.getElementsByClassName('valid');
     let display = document.getElementById('display');
     display.focus();
-    for (i = 1; i < calculKeys.length; i++) {
+    /*for (i = 0; i < calculKeys.length; i++) {
         let thisKey = calculKeys[i];
         thisKey.addEventListener('click', function () {
+            if(finishedCalculation){
+                display.value = '';
+            }
             thisKey.style.border = "2px solid black"
             thisKey.style.backgroundColor = "#6E6E6E";
             display.value = display.value + Number(thisKey.innerHTML);
@@ -16,13 +20,16 @@ var callback = function () {
         });
     }
     document.addEventListener('keypress', function (event) {
+        if(finishedCalculation){
+            display.value = '';
+        }
         let key = event.key;
         console.log(key);
         let myReg = /[0-9]/;
         if (myReg.exec(key)) {
             console.log('match1');
             //display.value = display.value + Number(key);
-            for (i = 1; i < calculKeys.length; i++) {
+            for (i = 0; i < calculKeys.length; i++) {
                 if (key == Number(calculKeys[i].innerHTML)) {
                     let thisKey = calculKeys[i];
                     thisKey.style.border = "2px solid black"
@@ -35,6 +42,10 @@ var callback = function () {
             }
         }
         display.focus();
-    })
+    });*/
+    let clear = document.getElementById('clear');
+    clear.addEventListener('click', function(){
+        display.value = '';
+    });
 }
 window.addEventListener('load', callback);
