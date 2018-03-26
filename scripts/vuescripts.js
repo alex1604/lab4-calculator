@@ -180,6 +180,8 @@ window.addEventListener('load', function(){
                 param2 = 0;
             },
             clear: function(event){
+                param1 = 0;
+                param2 = 0;
                 this.number = '';
                 this.$refs.input.focus();
             },
