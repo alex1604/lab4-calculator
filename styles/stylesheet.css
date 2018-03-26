@@ -21,7 +21,7 @@ body{
     justify-content: flex-start;
 }
 .calcul{
-    width:25%;
+    width:20%;
     background-color:gray;
     color:white;
     text-shadow: 2px 0 black, 2px 0 black;
@@ -36,6 +36,19 @@ body{
 .calcul:hover{
     cursor:pointer;
 }
+.calcul:active{
+    width:20%;
+    color:white;
+    text-shadow: 2px 0 black, 2px 0 black;
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:column;
+    justify-content: space-around;
+    align-items: center;
+    font-size:1.5em;
+    border: 2px solid black;
+    background-color: #6E6E6E;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
@@ -43,7 +56,7 @@ input::-webkit-inner-spin-button {
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 #display{
-    width: 55% !important;
+    width: 100% !important;
     background-color: lightcyan;
     outline:none;
     display:flex;
@@ -56,12 +69,10 @@ input::-webkit-inner-spin-button {
     font-size:1.5em;
     letter-spacing:3px;
 }
-.xs{
-    width: 15% !important;
-}
-#cero{
-    width: 37% !important;
+
+#clear{
+    width: 40% !important;
 }
 #equal{
-    width: 38% !important;
+    width: 40% !important;
 }

@@ -24,33 +24,19 @@
     </div>
     <div id="container">
         <div class="row">
-            <input type="number" class="calcul" id="display" v-bind:value="number"/>
-            <div class="calcul xs operator" id="square" v-on:click="square"> <p>x<sup>2</sup></p> </div>
-            <div class="calcul xs operator" id="root" v-on:click="root"> &#8730; </div>
-            <div class="calcul xs operator" id="division" v-on:click="division"> / </div>
+            <input type="number" ref="input" class="calcul" id="display" v-bind:value="number" v-on:keyup="keypress" v-on:keydown="pressclear"  v-on:blur="focus" autofocus>
         </div>
         <div class="row" id="highrow">
-            <div class="calcul valid"> 7 </div>
-            <div class="calcul valid"> 8 </div>
-            <div class="calcul valid"> 9 </div>
-            <div class="calcul operator" id="multiplication" v-on:click="multiplication"> * </div>
+            <div class="operator" v-bind:class="{'calcul' : isNotPressed, 'calculPressed' : isPressed}" id="square" v-on:click="square"> <p>x<sup>2</sup></p> </div>
+            <div class="operator" v-bind:class="{'calcul' : isNotPressed, 'calculPressed' : isPressed}" id="division" v-on:click="division"> / </div>
+            <div class="operator" v-bind:class="{'calcul' : isNotPressed, 'calculPressed' : isPressed}" id="substraction" v-on:click="substraction"> - </div>
+            <div v-bind:class="{'calcul' : isNotPressed, 'calculPressed' : isPressed}" id="clear" v-on:click="clear"> C </div>
         </div>
         <div class="row" id="middlerow">
-            <div class="calcul valid"> 4 </div>
-            <div class="calcul valid"> 5 </div>
-            <div class="calcul valid"> 6 </div>
-            <div class="calcul operator" id="substraction" v-on:click="substraction"> - </div>
-        </div>
-        <div class="row" id="lowrow">
-            <div class="calcul valid"> 1 </div>
-            <div class="calcul valid"> 2 </div>
-            <div class="calcul valid"> 3 </div>
-            <div class="calcul operator" id="addition" v-on:click="addition"> + </div>
-        </div>
-        <div class="row" id="extrarow">
-            <div class="calcul" id="clear"> C </div>
-            <div class="calcul valid" id="cero"> 0 </div>
-            <div class="calcul" id="equal" v-on:click="result"> = </div>
+            <div class="operator" v-bind:class="{'calcul' : isNotPressed, 'calculPressed' : isPressed}" id="root" v-on:click="root"> &#8730; </div>
+            <div class="operator" v-bind:class="{'calcul' : isNotPressed, 'calculPressed' : isPressed}" id="multiplication" v-on:click="multiplication"> * </div>
+            <div class="operator" v-bind:class="{'calcul' : isNotPressed, 'calculPressed' : isPressed}" id="addition" v-on:click="addition"> + </div>
+            <div class="operator" v-bind:class="{'calcul' : isNotPressed, 'calculPressed' : isPressed}" id="equal" v-on:click="result"> = </div>
         </div>
     </div>
 </body>

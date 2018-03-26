@@ -1,44 +1,164 @@
 window.addEventListener('load', function(){
-    let param1;
-    let param2;
+    let param1 = 0;
+    let param2 = 0;
     let finishedCalculation = false;
+    let currentOperatorName;
+    
     let vm = new Vue({  // glöm inte window.load!
         el: '#container',
-        data: { number: ''},
+        data: { 
+            number: '',
+            isNotPressed: true,
+            isPressed: false,
+        },
+        mounted:function(){
+            this.focus() //method1 will execute at pageload
+        },
         methods: {
+            keypress: function(event){
+                let myReg = /[0-9]/;
+                String(this.number);
+                if(myReg.exec(event.key)){
+                this.number += event.key;
+                console.log(typeof(this.number));
+                } else {
+                    switch (event.key){
+                        case '+':
+                            currentOperatorName = 'addition';
+                            break
+                        case '-':
+                            currentOperatorName = 'substraction';
+                            break
+                    }
+                    param1 = Number(this.number);
+                    this.number = '';
+                    this.$refs.input.focus();
+                }
+            },
             square: function(event) {
-                param1 = display.value;  // this refererar till data-objektet
-                this.number = Math.pow(param1,2);
+                param1 = Number(this.number);  // this refererar till data-objektet
+                this.number = String(Math.pow(param1,2));
+                param1 = Number(this.number);
                 finishedCalculation = true;
             },
             root: function(event){
-                param1 = display.value;
-                this.number = Math.sqrt(param1);
+                param1 = Number(this.number);
+                this.number = String(Math.sqrt(param1));
+                param1 = Number(this.number);
                 finishedCalculation = true;
             },
             division: function(event){
-                param1 = display.value;
-                display.value = '';
+                if(param1 != 0 && currentOperatorName != ''){
+                    switch (currentOperatorName){
+                        case 'division':
+                            param1 /= Number(this.number);
+                            break
+                        case 'multiplication':
+                            param1 *= Number(this.number);
+                            break
+                        case 'substraction':
+                            param1 -= Number(this.number);
+                            break
+                        case 'addition':
+                            param1 += Number(this.number);
+                            break
+                    }
+                    currentOperatorName = 'division';
+                console.log('param1: ' + param1);
+                this.number = param1;
+                } else {
+                    param1 = Number(this.number);
+                    currentOperatorName = 'division';
+                }
+                this.number = "";
+                console.log('number cleared?: ' + this.number)
                 finishedCalculation = false;
+                this.$refs.input.focus();
             },
             multiplication: function(event){
-                param1 = display.value;
-                display.value = '';
+                if(param1 != 0 && currentOperatorName != ''){
+                    switch (currentOperatorName){
+                        case 'division':
+                            param1 /= Number(this.number);
+                            break
+                        case 'multiplication':
+                            param1 *= Number(this.number);
+                            break
+                        case 'substraction':
+                            param1 -= Number(this.number);
+                            break
+                        case 'addition':
+                            param1 += Number(this.number);
+                            break
+                    }
+                    currentOperatorName = 'multiplication';
+                    console.log('param1: ' + param1);
+                    this.number = param1;
+                 } else {
+                    param1 = Number(this.number);
+                    currentOperatorName = 'multiplication';
+                }
+                this.number = "";
                 finishedCalculation = false;
+                this.$refs.input.focus();
             },
             substraction: function(event){
-                param1 = display.value;
-                display.value = '';
+                if(param1 != 0 && currentOperatorName != ''){
+                    switch (currentOperatorName){
+                        case 'division':
+                            param1 /= Number(this.number);
+                            break
+                        case 'multiplication':
+                            param1 *= Number(this.number);
+                            break
+                        case 'substraction':
+                            param1 -= Number(this.number);
+                            break
+                        case 'addition':
+                            param1 += Number(this.number);
+                            break
+                    }
+                    currentOperatorName = 'substraction';
+                    console.log('param1: ' + param1);
+                    this.number = param1;
+                 } else {
+                    param1 = Number(this.number);
+                    currentOperatorName = 'substraction';
+                }
+                this.number = "";
                 finishedCalculation = false;
+                this.$refs.input.focus();
             },
             addition: function(event){
-                param1 = display.value;
-                display.value = '';
+                if(param1 != 0 && currentOperatorName != ''){
+                    switch (currentOperatorName){
+                        case 'division':
+                            param1 /= Number(this.number);
+                            break
+                        case 'multiplication':
+                            param1 *= Number(this.number);
+                            break
+                        case 'substraction':
+                            param1 -= Number(this.number);
+                            break
+                        case 'addition':
+                            param1 += Number(this.number);
+                            break
+                    }
+                    this.number = param1;
+                    currentOperatorName = 'addition';
+                    console.log('param1: ' + param1);
+                 } else {
+                    param1 = Number(this.number);
+                    currentOperatorName = 'addition';
+                }
+                this.number = "";
                 finishedCalculation = false;
+                this.$refs.input.focus();
             },
 
             result: function(event) {
-                param2 = display.value;
+                param2 = Number(this.number);
                 switch (currentOperatorName){
                     case 'division':
                         this.number = param1/param2;
@@ -47,70 +167,32 @@ window.addEventListener('load', function(){
                         this.number = param1*param2;
                         break
                     case 'substraction':
-                        this.number = Number(param1) - Number(param2);
+                        this.number = param1 - param2;
                         break
                     case 'addition':
-                        this.number = Number(param1) + Number(param2);
+                        this.number = param1 + param2;
                         break
                 }
+                currentOperatorName = '';
                 finishedCalculation = true;
-            }
-        }
-    });
-    let currentOperatorName;
-    let operators = document.getElementsByClassName('operator');
-    console.log(operators);
-    for (let x of operators){
-        x.addEventListener('click', function(){
-            currentOperatorName = x.id;
-            console.log(currentOperatorName);
-        });
-    }
-    let calculKeys = document.getElementsByClassName('valid');
-    for (i = 0; i < calculKeys.length; i++) {
-        let thisKey = calculKeys[i];
-        thisKey.addEventListener('click', function () {
-            if(finishedCalculation){
-                display.value = '';
-            }
-            display.focus();
-        });
-    }
-    document.addEventListener('keypress', function (event) {
-        if(finishedCalculation){
-            display.value = '';
-        }
-        let key = event.key;
-        console.log(key);
-        let myReg = /[0-9]/;
-        if (myReg.exec(key)) {
-            console.log('match1');
-            //display.value = display.value + Number(key);
-            for (i = 0; i < calculKeys.length; i++) {
-                if (key == Number(calculKeys[i].innerHTML)) {
-                    let thisKey = calculKeys[i];
-                    //thisKey.style.border = "2px solid black"
-                    //thisKey.style.backgroundColor = "#6E6E6E";
-                    //setTimeout(function () {
-                        //thisKey.style.border = "0.5px solid black";
-                        //thisKey.style.backgroundColor = "gray";
-                    }//, 100);
+                this.$refs.input.focus();
+                param1 = 0;
+                param2 = 0;
+            },
+            clear: function(event){
+                this.number = '';
+                this.$refs.input.focus();
+            },
+            pressclear: function(event){
+                if(finishedCalculation){
+                    this.number = '';
+                } else {
+                    this.$refs.input.focus();
                 }
-            }
-        //}
-        display.focus();
-    });
-    let buttons = document.getElementsByClassName('calcul');
-    for (let x of buttons){
-        x.addEventListener('click',function(){
-            x.style.border = "2px solid black"
-            x.style.backgroundColor = "#6E6E6E";
-            display.value = display.value + Number(x.innerHTML);
-            setTimeout(function () {
-                x.style.border = "0.5px solid black";
-                x.style.backgroundColor = "gray";
-            }, 100);
-        });
-    }
-    
-})
+            },
+            focus: function(event){
+                this.$refs.input.focus();
+            },
+        }
+    }); 
+});
