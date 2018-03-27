@@ -2,6 +2,7 @@ window.addEventListener('load', function(){
     let param1 = 0;
     let param2 = 0;
     let finishedCalculation = false;
+    let clearInput = false;
     let currentOperatorName;
     
     let vm = new Vue({  // glöm inte window.load!
@@ -36,16 +37,95 @@ window.addEventListener('load', function(){
                 }
             },
             square: function(event) {
-                param1 = Number(this.number);  // this refererar till data-objektet
+                if(param1 != 0 && currentOperatorName != ''){
+                    switch (currentOperatorName){
+                        case 'division':
+                            param1 /= Number(this.number);
+                            param1 = Math.pow(param1,2);
+                            break
+                        case 'multiplication':
+                            param1 *= Number(this.number);
+                            param1 = Math.pow(param1,2);
+                            break
+                        case 'substraction':
+                            param1 -= Number(this.number);
+                            param1 = Math.pow(param1,2);
+                            break
+                        case 'addition':
+                            param1 += Number(this.number);
+                            param1 = Math.pow(param1,2);
+                            break
+                        case 'square':
+                            param1 = Math.pow(param1,2);
+                            break
+                        case 'root':
+                            param1 = Math.pow(param1,2);
+                            break
+                    }
+                    this.number = param1;
+                    clearInput = true;
+
+                } else if (param1 == 0 || param1 == ''){
+                    param1 = Number(this.number);
+                    param1 = Math.pow(param1,2);
+                    this.number = param1;
+                    clearInput = true;
+                }
+                currentOperatorName = 'square';
+                console.log('number cleared?: ' + this.number)
+                finishedCalculation = true;
+                this.$refs.input.focus();
+
+                /*param1 = Number(this.number);  // this refererar till data-objektet
                 this.number = String(Math.pow(param1,2));
                 param1 = Number(this.number);
                 finishedCalculation = true;
+                clearInput = true;*/
             },
             root: function(event){
-                param1 = Number(this.number);
+                if(param1 != 0 && currentOperatorName != ''){
+                    switch (currentOperatorName){
+                        case 'division':
+                            param1 /= Number(this.number);
+                            param1 = Math.sqrt(param1);
+                            break
+                        case 'multiplication':
+                            param1 *= Number(this.number);
+                            param1 = Math.sqrt(param1);
+                            break
+                        case 'substraction':
+                            param1 -= Number(this.number);
+                            param1 = Math.sqrt(param1);
+                            break
+                        case 'addition':
+                            param1 += Number(this.number);
+                            param1 = Math.sqrt(param1);
+                            break
+                        case 'square':
+                            param1 = Math.sqrt(param1);
+                            break
+                        case 'root':
+                            param1 = Math.sqrt(param1);
+                            break
+                    }
+                    this.number = param1;
+                    clearInput = true;
+
+                } else if (param1 == 0 || param1 == ''){
+                    param1 = Number(this.number);
+                    param1 = Math.sqrt(param1);
+                    this.number = param1;
+                    clearInput = true;
+                }
+                currentOperatorName = 'root';
+                console.log('number cleared?: ' + this.number)
+                finishedCalculation = true;
+                this.$refs.input.focus();
+                /*param1 = Number(this.number);
                 this.number = String(Math.sqrt(param1));
                 param1 = Number(this.number);
                 finishedCalculation = true;
+                clearInput = true;*/
             },
             division: function(event){
                 if(param1 != 0 && currentOperatorName != ''){
@@ -63,14 +143,15 @@ window.addEventListener('load', function(){
                             param1 += Number(this.number);
                             break
                     }
+                    this.number = param1;
+                    clearInput = true;
                     currentOperatorName = 'division';
                 console.log('param1: ' + param1);
-                this.number = param1;
-                } else {
+                } else if (param1 == 0 || param1 == ''){
                     param1 = Number(this.number);
                     currentOperatorName = 'division';
+                    this.number = "";
                 }
-                this.number = "";
                 console.log('number cleared?: ' + this.number)
                 finishedCalculation = false;
                 this.$refs.input.focus();
@@ -91,14 +172,15 @@ window.addEventListener('load', function(){
                             param1 += Number(this.number);
                             break
                     }
+                    this.number = param1;
+                    clearInput = true;
                     currentOperatorName = 'multiplication';
                     console.log('param1: ' + param1);
-                    this.number = param1;
-                 } else {
+                 } else if (param1 == 0 || param1 == ''){
                     param1 = Number(this.number);
                     currentOperatorName = 'multiplication';
+                    this.number = "";
                 }
-                this.number = "";
                 finishedCalculation = false;
                 this.$refs.input.focus();
             },
@@ -118,14 +200,14 @@ window.addEventListener('load', function(){
                             param1 += Number(this.number);
                             break
                     }
-                    currentOperatorName = 'substraction';
-                    console.log('param1: ' + param1);
                     this.number = param1;
-                 } else {
+                    clearInput = true;
+                    currentOperatorName = 'substraction';
+                 } else if (param1 == 0 || param1 == ''){
                     param1 = Number(this.number);
                     currentOperatorName = 'substraction';
+                    this.number = "";
                 }
-                this.number = "";
                 finishedCalculation = false;
                 this.$refs.input.focus();
             },
@@ -146,13 +228,14 @@ window.addEventListener('load', function(){
                             break
                     }
                     this.number = param1;
+                    clearInput = true;
                     currentOperatorName = 'addition';
                     console.log('param1: ' + param1);
-                 } else {
+                 } else if (param1 == 0 || param1 == ''){
                     param1 = Number(this.number);
                     currentOperatorName = 'addition';
+                    this.number = "";
                 }
-                this.number = "";
                 finishedCalculation = false;
                 this.$refs.input.focus();
             },
@@ -188,7 +271,11 @@ window.addEventListener('load', function(){
             pressclear: function(event){
                 if(finishedCalculation){
                     this.number = '';
-                } else {
+                } else if(clearInput){
+                    this.number = '';
+                    clearInput = false;
+                } 
+                else {
                     this.$refs.input.focus();
                 }
             },
