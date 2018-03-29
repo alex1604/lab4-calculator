@@ -20,6 +20,7 @@ window.addEventListener('load', function(){
                 let myReg = /[0-9]/;
                 String(this.number);
                 if(myReg.exec(event.key)){
+                    console.log('this key: ' + event.key)
                 this.number += event.key;
                 console.log(typeof(this.number));
                 } else {
@@ -271,9 +272,12 @@ window.addEventListener('load', function(){
             pressclear: function(event){
                 if(finishedCalculation){
                     this.number = '';
-                } else if(clearInput){
+                    finishedCalculation = false;
+                    console.log('clear finishCalculation');
+                } else if(clearInput && this.number != ''){
                     this.number = '';
                     clearInput = false;
+                    console.log('clear clearInput');
                 } 
                 else {
                     this.$refs.input.focus();
